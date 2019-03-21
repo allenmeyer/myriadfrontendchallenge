@@ -14,16 +14,14 @@ function PokeForm (props){
 
 
 class PokeDetails extends React.Component {
-	displayPoke = (data) => {
-		
+	constructor (props) {
+		super(props);
+		this.state = {
+			data: [],
+		}
 	}
-	async getPokemon(url) {
-		const res = await axios.get(url);
-		console.log(res);
-		return res;
-	}
-		
-	render() {
+	
+	componentDidMount() { // Perform get request for page of pokemon data
 		const poke = this.props.searchPokeName;
 		const page = this.props.page;
 		const url = poke ? 
@@ -31,21 +29,68 @@ class PokeDetails extends React.Component {
 							   `https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${poke}` :
 						page ? `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${page}` :
 							   `https://intern-pokedex.myriadapps.com/api/v1/pokemon`;
-		const pokedata = this.getPokemon(url);
-		return <p>placeholder</p>
+		axios.get(url).then( (res) => {
+			let data = [];
+			for (var i = 0; i < res.data.data.length; i++) {
+				data.push(res.data.data[i]);
+			}
+			this.setState({ data });
+		});
+	}
+		
+	render() {
+		let pokedata = this.state.data.map( (pokemon) => {
+			return (
+				<td> 
+					<img src = {pokemon.image} alt = 'pokemon' /> 
+					<p> {pokemon.name} </p>
+				</td>
+			);
+		});
+		return (
+			<div>
+				<table>
+					<tbody>
+						<tr>
+							{pokedata[0]}
+							{pokedata[1]}
+							{pokedata[2]}
+						</tr>
+						<tr>
+							{pokedata[3]}
+							{pokedata[4]}
+							{pokedata[5]}
+						</tr>
+						<tr>
+							{pokedata[6]}
+							{pokedata[7]}
+							{pokedata[8]}
+						</tr>
+						<tr>
+							{pokedata[9]}
+							{pokedata[10]}
+							{pokedata[11]}
+						</tr>
+						<tr>
+							{pokedata[12]}
+							{pokedata[13]}
+							{pokedata[14]}
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		);
 	}
 }	
 
 
 class PokePage extends React.Component {
 	render() {
-		console.log(this.props);
 		return (
 			<div>
 				<PokeForm onSubmit={this.props.searchPokes}/>
-				<PokeDetails getPokesFn={this.props.searchPokes} 
-					searchPokeName={this.props.match.params.poke}
-					page={this.props.match.params.page}
+				<PokeDetails searchPokeName={this.props.match.params.poke}
+									   page={this.props.match.params.page}
 				/>
 			</div>
 		);
@@ -54,6 +99,8 @@ class PokePage extends React.Component {
 
 class App extends Component {
 	
+	// Not currently implemented
+	// Need to use to direct to /name/${poke}
 	searchPokes = (e) => {
 		e.preventDefault();
 		const poke = e.target.elements.pokename.value;
@@ -71,16 +118,15 @@ class App extends Component {
 					<Route path='/name/:poke/page/:page' component={(props)=>
 						<PokePage {...props} searchPokes={this.searchPokes}  />
 					} />
-					<Route path='/name/:poke/' component={(props)=>
+					<Route path='/name/:poke' component={(props)=>
 						<PokePage {...props} searchPokes={this.searchPokes}  />
 					} />
-					<Route path='/page/:page/' component={(props)=>
+					<Route path='/page/:page' component={(props)=>
 						<PokePage {...props} searchPokes={this.searchPokes}  />
 					} />
 					<Route path='/' component={(props)=>
 						<PokePage {...props} searchPokes={this.searchPokes}  />
 					} />
-
 				</Switch>
 			</BrowserRouter>
 		);
