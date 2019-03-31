@@ -24,7 +24,7 @@ class PokeDetails extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			data: [],
+			data: '',
 		}
 	}
 	
@@ -38,31 +38,35 @@ class PokeDetails extends React.Component {
 		);
 	}
 	
-	componentDidMount() {
+	renderData = () => {
+		if (this.state.data !== '') {
+			let pokedata = this.state.data;
+			return (
+				<div>
+					<button onClick={this.props.history.goBack}> Go Back </button> 
+					<p> {pokedata.name}, the {pokedata.genus} </p>
+					<img src = {pokedata.image} alt = 'Pokemon' />
+					<p> {arrayToString(pokedata.types)} </p>
+					<p> Abilities: {arrayToString(pokedata.abilities)} </p>
+					{pokedata.description}
+					{this.printStats(pokedata.stats)}
+				</div>
+			);
+		}
+		return <div> </div>;
+	}
+	
+	componentDidMount() { // Retrieve pokemon data
 		const id = this.props.match.params.id;
 		const url = `https://intern-pokedex.myriadapps.com/api/v1/pokemon/${id}`;
 		axios.get(url).then( (res) => {
-			let data = [];
-			data.push(res.data.data);
+			let data = res.data.data;
 			this.setState({data});
 		});
 	}
 	
 	render() {
-		let pokedata = this.state.data.map((pokemon) => {
-			return (
-				<div>
-					<button onClick={this.props.history.goBack}> Go Back </button> 
-					<p> {pokemon.name}, the {pokemon.genus} </p>
-					<img src = {pokemon.image} alt = 'Pokemon' />
-					<p> {arrayToString(pokemon.types)} </p>
-					<p> Abilities: {arrayToString(pokemon.abilities)} </p>
-					{pokemon.description}
-					{this.printStats(pokemon.stats)}
-				</div>
-			);
-		});
-		return <div>{pokedata[0]}</div>;
+		return <div>{this.renderData()}</div>;
 	}
 }
 
@@ -78,24 +82,7 @@ class PokeList extends React.Component {
 		window.location.href = `/viewPokemon/${id}`;
 	}
 	
-	componentDidMount() { // Perform get request for page of pokemon data
-		const poke = this.props.search_name;
-		const page = this.props.page;
-		const url = poke ? 
-						page ? `https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${poke}&page=${page}` :
-							   `https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${poke}` :
-						page ? `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${page}` :
-							   `https://intern-pokedex.myriadapps.com/api/v1/pokemon`;
-		axios.get(url).then( (res) => {
-			let data = [];
-			for (var i = 0; i < res.data.data.length; i++) {
-				data.push(res.data.data[i]);
-			}
-			this.setState({ data });
-		});
-	}
-		
-	render() {
+	renderData = () => {
 		let pokedata = this.state.data.map( (pokemon) => {
 			return (
 				<td onClick={() => this.viewPokemonDetails(pokemon.id)}> 
@@ -138,6 +125,27 @@ class PokeList extends React.Component {
 				</table>
 			</div>
 		);
+	}
+	
+	componentDidMount() { // Perform get request for page of pokemon data
+		const poke = this.props.search_name;
+		const page = this.props.page;
+		const url = poke ? 
+						page ? `https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${poke}&page=${page}` :
+							   `https://intern-pokedex.myriadapps.com/api/v1/pokemon?name=${poke}` :
+						page ? `https://intern-pokedex.myriadapps.com/api/v1/pokemon?page=${page}` :
+							   `https://intern-pokedex.myriadapps.com/api/v1/pokemon`;
+		axios.get(url).then( (res) => {
+			let data = [];
+			for (var i = 0; i < res.data.data.length; i++) {
+				data.push(res.data.data[i]);
+			}
+			this.setState({ data });
+		});
+	}
+		
+	render() {
+		return <div> {this.renderData()} </div>;
 	}
 }	
 
