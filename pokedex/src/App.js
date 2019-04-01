@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
+import './style/pokedexstyle.css'
 
 function PokeForm (props){
 	return (
@@ -20,7 +21,6 @@ function arrayToString(array) {
 }
 
 class PokeDetails extends React.Component {
-	
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -30,7 +30,7 @@ class PokeDetails extends React.Component {
 	
 	printStats(stats) {
 		return (
-			<div>
+			<div className="PokemonStatsDiv">
 				<p> Attack: {stats['attack']}, Defense: {stats['defense']} </p>
 				<p> SpAttack: {stats['special-attack']}, SpDefense: {stats['special-defense']} </p> 
 				<p> Health: {stats['hp']}, Speed: {stats['speed']} </p>
@@ -66,7 +66,7 @@ class PokeDetails extends React.Component {
 	}
 	
 	render() {
-		return <div>{this.renderData()}</div>;
+		return <div className="PokemonDetailsDiv">{this.renderData()}</div>;
 	}
 }
 
@@ -83,48 +83,31 @@ class PokeList extends React.Component {
 	}
 	
 	renderData = () => {
+		let num_per_row = window.innerWidth >= 700 ? 3 :
+						  window.innerWidth >= 500 ? 2 : 1;
+		let num_rows = Math.ceil(15 / num_per_row);
+		console.log(num_per_row);
+		console.log(num_rows);
 		let pokedata = this.state.data.map( (pokemon) => {
 			return (
-				<td onClick={() => this.viewPokemonDetails(pokemon.id)}> 
+				<td onClick={() => this.viewPokemonDetails(pokemon.id)}
+					className="PokemonListItem"> 
 					<img src = {pokemon.image} alt = 'Pokemon' /> 
 					<p> {pokemon.name} </p>
 					<p> {arrayToString(pokemon.types)} </p>
 				</td>
 			);
 		});
-		return (
-			<div>
-				<table>
-					<tbody>
-						<tr>
-							{pokedata[0]}
-							{pokedata[1]}
-							{pokedata[2]}
-						</tr>
-						<tr>
-							{pokedata[3]}
-							{pokedata[4]}
-							{pokedata[5]}
-						</tr>
-						<tr>
-							{pokedata[6]}
-							{pokedata[7]}
-							{pokedata[8]}
-						</tr>
-						<tr>
-							{pokedata[9]}
-							{pokedata[10]}
-							{pokedata[11]}
-						</tr>
-						<tr>
-							{pokedata[12]}
-							{pokedata[13]}
-							{pokedata[14]}
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		);
+		let pokemon_list = [];
+		
+		for (var i = 0; i < num_rows; i++) {
+			let pokemon_row = [];
+			for (var j = 0; j < num_per_row; j++) {
+				pokemon_row.push(pokedata[(i*num_per_row)+j]);
+			}
+			pokemon_list.push(<tr className="PokemonListRow">{pokemon_row}</tr>);
+		}
+		return pokemon_list;
 	}
 	
 	componentDidMount() { // Perform get request for page of pokemon data
@@ -145,7 +128,15 @@ class PokeList extends React.Component {
 	}
 		
 	render() {
-		return <div> {this.renderData()} </div>;
+		return (
+			<div className="PokemonListDiv"> 
+				<table className="PokemonListTable">
+					<tbody>
+						{this.renderData()} 
+					</tbody>
+				</table>
+			</div>
+		);
 	}
 }	
 
