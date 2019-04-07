@@ -1,10 +1,31 @@
+body {
+	background-color: rgba(85, 166, 156, 1);
+}
+
 div {
 	margin: 0 auto;
 	text-align: center;
 }
 
+img {
+	border: .5px solid black;
+	border-radius: 4px;
+}
+
+button {
+	margin: 5px;
+}
+
+.PokemonStatsDiv {
+	width: 500px;
+}
+
 .PokemonListDiv {
 	width: 65%;
+}
+
+::placeholder {
+	color: DarkGreen;
 }
 
 .PokemonListTable {
@@ -17,10 +38,204 @@ div {
 	position: relative;
 	width: 200px;
 	height: 240px;
-	padding-right: 5	0px;
 	border: 1px solid black;
+	background-color: white;
+	border-radius: 4px;
 }
 
 .PokemonDetailsDiv {
+	margin-bottom: 100px;
 	width: 50%;
+	background-color: white;
+	margin-top: 50px;
+	border: 1px solid black;
+	border-radius: 4px;
+}
+
+#DetailsHeader {
+	margin-left: 40px;
+	margin-right: 40px;
+	background-color: rgba(85, 166, 156, 1);
+	color: white;
+}
+
+
+#PokeFormInput {
+	border-radius: 5px;
+	border: none;
+	margin-top: 50px;
+	height: 96px;
+	width: 456px;
+	font-family: 'Roboto';
+	font-size: 72px;
+	font-weight: bold;
+	background-color: SeaGreen;
+	color: white;
+	text-align: left;
+}
+
+/**
+ * All type styles
+*/
+
+.fire {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: rgba(250, 84, 28, 1);
+	background-color: rgba(255, 242, 232, 1);
+	border: 1px solid rgba(255, 187, 150, 1);
+	border-radius: 4px;
+}
+.grass {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: #2D9E29;
+	background-color: #7DE37A;
+	border: 1px solid #2D9E29;
+	border-radius: 4px;
+}
+.poison {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: rgba(114, 46, 209, 1);
+	background-color: plum;
+	border: 1px solid purple;
+	border-radius: 4px;
+}
+.ice {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: lightskyblue;
+	background-color: #D9F9FE;
+	border: 1px solid lightskyblue;
+	border-radius: 4px;
+}
+.water {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: rgba(24, 144, 255, 1);
+	background-color: #9CDEFE;
+	border: 1px solid rgba(24, 144, 255, 1);
+	border-radius: 4px;
+}
+.bug {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: #83901a;
+	background-color: #D6EC69;
+	border: 1px solid #83901a;
+	border-radius: 4px;
+}
+.normal {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color:  rgba(112, 112, 72, 1);
+	background-color: blancedalmond;
+	border: 1px solid rgba(112, 112, 72, 1);
+	border-radius: 4px;
+}.electric {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: gold;
+	background-color: lightyellow;
+	border: 1px solid gold;
+	border-radius: 4px;
+}
+.ground {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: darkgoldenrod;
+	background-color: wheat;
+	border: 1px solid darkgoldenrod;
+	border-radius: 4px;
+}
+.fairy {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: hotpink;
+	background-color: lightpink;
+	border: 1px solid hotpink;
+	border-radius: 4px;
+}
+.fighting {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: crimson;
+	background-color: salmon;
+	border: 1px solid crimson;
+	border-radius: 4px;
+}
+.psychic {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: #f59;
+	background-color: pink;
+	border: 1px solid #f59;
+	border-radius: 4px;
+}
+.rock {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: sienna;
+	background-color: tan;
+	border: 1px solid sienna;
+	border-radius: 4px;
+}
+.steel {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: dimgray;
+	background-color: silver;
+	border: 1px solid dimgray;
+	border-radius: 4px;
+}
+.flying {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: aqua;
+	background-color: #A5FAF1;
+	border: 1px solid aqua;
+	border-radius: 4px;
+}
+.ghost {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: indigo;
+	background-color: mediumslateblue;
+	border: 1px solid indigo;
+	border-radius: 4px;
+}
+.dragon {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: blue;
+	background-color: royalblue;
+	border: 1px solid blue;
+	border-radius: 4px;
+}
+.dark {
+	margin: 2px;
+	height: 22px;
+	width: 43px;
+	color: black;
+	background-color: darkslategray;
+	border: 1px solid black;
+	border-radius: 4px;
 }
