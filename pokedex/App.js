@@ -170,7 +170,7 @@ class PokeDetails extends React.Component {
 			let type_list = [];
 		
 			for (var i = 0; i < pokedata.types.length; i++) {
-				type_list.push(<span className={pokedata.types[i]}>{pokedata.types[i].toUpperCase()}</span>);
+				type_list.push(<span className={pokedata.types[i] + " pokemontype"}>{pokedata.types[i].toUpperCase()}</span>);
 			}
 			return (
 				<div className="PokemonDetailsDiv">
@@ -232,11 +232,17 @@ class PokeList extends React.Component {
 			let type_list = [];
 		
 			for (var i = 0; i < pokemon.types.length; i++) {
-				type_list.push(<span className={pokemon.types[i]}>{pokemon.types[i].toUpperCase()}</span>);
+				type_list.push(
+				<span 
+					className={pokemon.types[i] + " pokemontype"}
+					key={i}>
+					{pokemon.types[i].toUpperCase()}
+				</span>);
 			}
 			return (
 				<td onClick={() => this.viewPokemonDetails(pokemon.id)}
-					className="PokemonListItem"> 
+					className="PokemonListItem"
+					key = {pokemon.id}> 
 					<p> {pokemon.name} </p>
 					<img src = {pokemon.image} alt = 'Pokemon' /> <br /> 
 					<span> {type_list} </span>
@@ -250,7 +256,7 @@ class PokeList extends React.Component {
 			for (var j = 0; j < num_per_row; j++) {
 				pokemon_row.push(pokedata[(i*num_per_row)+j]);
 			}
-			pokemon_list.push(<tr className="PokemonListRow">{pokemon_row}</tr>);
+			pokemon_list.push(<tr className="PokemonListRow" key={i}>{pokemon_row}</tr>);
 		}
 		return pokemon_list;
 	}
