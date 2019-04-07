@@ -74,6 +74,11 @@ button {
 	text-align: left;
 }
 
+.PokemonStats {
+	display: inline-block;
+	height: 30px;
+}
+
 /**
  * All type styles
 */

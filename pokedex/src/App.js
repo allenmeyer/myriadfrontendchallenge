@@ -32,92 +32,43 @@ function capitalizeWords(word) {
 	return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-function getStatsStyles(stats) {
+function createStatStyle(stat) {
 	var styles = {
-	'hpstyle':  
+		'main': 
 				{
-					display: 'inline-block',
-					width: stats['hp'] / 2.55 + '%',
-					height: '30px',
+					width: stat / 2.55 + '%',
 					backgroundColor: 'SeaGreen',
 				},
-	'hpfiller' : 
+		'filler':
 				{
-					display: 'inline-block',
-					width: (255-stats['hp']) / 2.55 + '%',
-					height: '30px',
-					backgroundColor: '#DFFFE4',
+					width: (255-stat) / 2.55 + '%',
+					backgroundColor : '#DFFFE4',
 				},
-	'attstyle': 
-				{
-					display: 'inline-block',
-					width: stats['attack'] / 2.55 + '%',
-					height: '30px',
-					backgroundColor: 'SeaGreen',
-				},
-	'attfiller' : 
-				{
-					display: 'inline-block',
-					width: (255-stats['attack']) / 2.55 + '%',
-					height: '30px',
-					backgroundColor: '#DFFFE4',
-				},
-	'defstyle' : 
-				{
-					display: 'inline-block',
-					width: stats['defense'] / 2.55 + '%',
-					height: '30px',
-					backgroundColor: 'SeaGreen',
-				},
-	'deffiller': 
-				{
-					display: 'inline-block',
-					width: (255-stats['defense']) / 2.55 + '%',
-					height: '30px',
-					backgroundColor: '#DFFFE4',
-				},
-	'spattstyle' : 
-				{
-					display: 'inline-block',
-					width: stats['special-attack'] / 2.55 + '%',
-					height: '30px',
-					backgroundColor: 'SeaGreen',
-				},
-	'spattfiller' : 
-				{
-					display: 'inline-block',
-					width: (255-stats['special-attack']) / 2.55 + '%',
-					height: '30px',
-					backgroundColor: '#DFFFE4',
-				},
-	'spdefstyle' : 
-				{
-					display: 'inline-block',
-					width: stats['special-defense'] / 2.55 + '%',
-					height: '30px',
-					backgroundColor: 'SeaGreen',
-				},
-	'spdeffiller' : 
-				{
-					display: 'inline-block',
-					width: (255-stats['special-defense']) / 2.55 + '%',
-					height: '30px',
-					backgroundColor: '#DFFFE4',
-				},
-	'speedstyle' : 
-				{
-					display: 'inline-block',
-					width: stats['speed'] / 2.55 + '%',
-					height: '30px',
-					backgroundColor: 'SeaGreen',
-				},
-	'speedfiller' : 
-				{
-					display: 'inline-block',
-					width: (255-stats['speed']) / 2.55 + '%',
-					height: '30px',
-					backgroundColor: '#DFFFE4',
-				},
+	};
+	return styles;
+}
+
+function getStatsStyles(stats) {
+	var hp_styles = createStatStyle(stats['hp']);
+	var att_styles = createStatStyle(stats['attack']);
+	var def_styles = createStatStyle(stats['defense']);
+	var spatt_styles = createStatStyle(stats['special-attack']);
+	var spdef_styles = createStatStyle(stats['special-defense']);
+	var speed_styles = createStatStyle(stats['speed']);
+	
+	var styles = {
+		'hpstyle': hp_styles['main'],
+		'hpfiller' : hp_styles['filler'],
+		'attstyle': att_styles['main'],
+		'attfiller' : att_styles['filler'],
+		'defstyle' : def_styles['main'],
+		'deffiller': def_styles['filler'],
+		'spattstyle' : spatt_styles['main'],
+		'spattfiller' : spatt_styles['filler'],
+		'spdefstyle' : spdef_styles['main'],
+		'spdeffiller' : spdef_styles['filler'],
+		'speedstyle' : speed_styles['main'],
+		'speedfiller' : speed_styles['filler'],
 	}
 	return styles;
 }
@@ -137,28 +88,28 @@ class PokeDetails extends React.Component {
 			<div className="PokemonStatsDiv">
 				Stats <br />
 				<label> HP: {stats['hp']} </label> <br />
-				<span style={statStyles['hpstyle']}> </span>
-				<span style={statStyles['hpfiller']}> </span> 
+				<span className='PokemonStats' style={statStyles['hpstyle']}> </span>
+				<span className='PokemonStats' style={statStyles['hpfiller']}> </span> 
 				<br />
 				<label> Attack: {stats['attack']} </label> <br />
-				<span style={statStyles['attstyle']}> </span>
-				<span style={statStyles['attfiller']}> </span>
+				<span className='PokemonStats' style={statStyles['attstyle']}> </span>
+				<span className='PokemonStats' style={statStyles['attfiller']}> </span>
 				<br />
 				<label> Defense: {stats['defense']} </label> <br />
-				<span style={statStyles['defstyle']}> </span>
-				<span style={statStyles['deffiller']}> </span>
+				<span className='PokemonStats' style={statStyles['defstyle']}> </span>
+				<span className='PokemonStats' style={statStyles['deffiller']}> </span>
 				<br />
 				<label> SpAttack: {stats['special-attack']} </label> <br />
-				<span style={statStyles['spattstyle']}> </span>
-				<span style={statStyles['spattfiller']}> </span>
+				<span className='PokemonStats' style={statStyles['spattstyle']}> </span>
+				<span className='PokemonStats' style={statStyles['spattfiller']}> </span>
 				<br />
 				<label> SpDefense: {stats['special-defense']} </label> <br />
-				<span style={statStyles['spdefstyle']}> </span>
-				<span style={statStyles['spdeffiller']}> </span>
+				<span className='PokemonStats' style={statStyles['spdefstyle']}> </span>
+				<span className='PokemonStats' style={statStyles['spdeffiller']}> </span>
 				<br />
 				<label> Speed: {stats['speed']} </label> <br />
-				<span style={statStyles['speedstyle']}> </span>
-				<span style={statStyles['speedfiller']}> </span>
+				<span className='PokemonStats' style={statStyles['speedstyle']}> </span>
+				<span className='PokemonStats' style={statStyles['speedfiller']}> </span>
 			</div>
 		);
 	}
@@ -170,7 +121,7 @@ class PokeDetails extends React.Component {
 			let type_list = [];
 		
 			for (var i = 0; i < pokedata.types.length; i++) {
-				type_list.push(<span className={pokedata.types[i] + " pokemontype"}>{pokedata.types[i].toUpperCase()}</span>);
+				type_list.push(<span key={i} className={pokedata.types[i] + " pokemontype"}>{pokedata.types[i].toUpperCase()}</span>);
 			}
 			return (
 				<div className="PokemonDetailsDiv">
