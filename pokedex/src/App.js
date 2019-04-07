@@ -6,7 +6,9 @@ import './style/pokedexstyle.css'
 function PokeForm (props){
 	return (
 		<form onSubmit={props.onSubmit}>
-			<input type = 'text' name = 'pokename' placeholder = 'Search Pokedex'/>
+			<input type = 'text' name = 'pokename'
+			placeholder = 'Pokedex' id="PokeFormInput"/>
+			<br />
 			<button>Submit</button>
 		</form>
 	);
@@ -14,10 +16,110 @@ function PokeForm (props){
 
 function arrayToString(array) {
 	var arrayData = "";
-	for (var i = 0; i < array.length; i++) {
-		arrayData += array[i] + ' '
+	for (var i = 0; i < array.length-1; i++) {
+		arrayData += capitalizeWords(array[i]) + ', ';
 	}
+	arrayData += capitalizeWords(array[array.length-1]);
 	return arrayData;
+}
+
+function capitalizeWords(word) {
+	for (var i = 0; i < word.length; i++) {
+		if (word.charAt(i) === '-') {
+			word = word.slice(0, i+1) + word.charAt(i+1).toUpperCase() + word.slice(i+2);
+		}
+	}
+	return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function getStatsStyles(stats) {
+	var styles = {
+	'hpstyle':  
+				{
+					display: 'inline-block',
+					width: stats['hp'] / 2.55 + '%',
+					height: '30px',
+					backgroundColor: 'SeaGreen',
+				},
+	'hpfiller' : 
+				{
+					display: 'inline-block',
+					width: (255-stats['hp']) / 2.55 + '%',
+					height: '30px',
+					backgroundColor: '#DFFFE4',
+				},
+	'attstyle': 
+				{
+					display: 'inline-block',
+					width: stats['attack'] / 2.55 + '%',
+					height: '30px',
+					backgroundColor: 'SeaGreen',
+				},
+	'attfiller' : 
+				{
+					display: 'inline-block',
+					width: (255-stats['attack']) / 2.55 + '%',
+					height: '30px',
+					backgroundColor: '#DFFFE4',
+				},
+	'defstyle' : 
+				{
+					display: 'inline-block',
+					width: stats['defense'] / 2.55 + '%',
+					height: '30px',
+					backgroundColor: 'SeaGreen',
+				},
+	'deffiller': 
+				{
+					display: 'inline-block',
+					width: (255-stats['defense']) / 2.55 + '%',
+					height: '30px',
+					backgroundColor: '#DFFFE4',
+				},
+	'spattstyle' : 
+				{
+					display: 'inline-block',
+					width: stats['special-attack'] / 2.55 + '%',
+					height: '30px',
+					backgroundColor: 'SeaGreen',
+				},
+	'spattfiller' : 
+				{
+					display: 'inline-block',
+					width: (255-stats['special-attack']) / 2.55 + '%',
+					height: '30px',
+					backgroundColor: '#DFFFE4',
+				},
+	'spdefstyle' : 
+				{
+					display: 'inline-block',
+					width: stats['special-defense'] / 2.55 + '%',
+					height: '30px',
+					backgroundColor: 'SeaGreen',
+				},
+	'spdeffiller' : 
+				{
+					display: 'inline-block',
+					width: (255-stats['special-defense']) / 2.55 + '%',
+					height: '30px',
+					backgroundColor: '#DFFFE4',
+				},
+	'speedstyle' : 
+				{
+					display: 'inline-block',
+					width: stats['speed'] / 2.55 + '%',
+					height: '30px',
+					backgroundColor: 'SeaGreen',
+				},
+	'speedfiller' : 
+				{
+					display: 'inline-block',
+					width: (255-stats['speed']) / 2.55 + '%',
+					height: '30px',
+					backgroundColor: '#DFFFE4',
+				},
+	}
+	return styles;
 }
 
 class PokeDetails extends React.Component {
@@ -29,11 +131,34 @@ class PokeDetails extends React.Component {
 	}
 	
 	printStats(stats) {
+		var statStyles = getStatsStyles(stats);
+
 		return (
 			<div className="PokemonStatsDiv">
-				<p> Attack: {stats['attack']}, Defense: {stats['defense']} </p>
-				<p> SpAttack: {stats['special-attack']}, SpDefense: {stats['special-defense']} </p> 
-				<p> Health: {stats['hp']}, Speed: {stats['speed']} </p>
+				Stats <br />
+				<label> HP: {stats['hp']} </label> <br />
+				<span style={statStyles['hpstyle']}> </span>
+				<span style={statStyles['hpfiller']}> </span> 
+				<br />
+				<label> Attack: {stats['attack']} </label> <br />
+				<span style={statStyles['attstyle']}> </span>
+				<span style={statStyles['attfiller']}> </span>
+				<br />
+				<label> Defense: {stats['defense']} </label> <br />
+				<span style={statStyles['defstyle']}> </span>
+				<span style={statStyles['deffiller']}> </span>
+				<br />
+				<label> SpAttack: {stats['special-attack']} </label> <br />
+				<span style={statStyles['spattstyle']}> </span>
+				<span style={statStyles['spattfiller']}> </span>
+				<br />
+				<label> SpDefense: {stats['special-defense']} </label> <br />
+				<span style={statStyles['spdefstyle']}> </span>
+				<span style={statStyles['spdeffiller']}> </span>
+				<br />
+				<label> Speed: {stats['speed']} </label> <br />
+				<span style={statStyles['speedstyle']}> </span>
+				<span style={statStyles['speedfiller']}> </span>
 			</div>
 		);
 	}
@@ -41,14 +166,25 @@ class PokeDetails extends React.Component {
 	renderData = () => {
 		if (this.state.data !== '') {
 			let pokedata = this.state.data;
+			
+			let type_list = [];
+		
+			for (var i = 0; i < pokedata.types.length; i++) {
+				type_list.push(<span className={pokedata.types[i]}>{pokedata.types[i].toUpperCase()}</span>);
+			}
 			return (
-				<div>
-					<button onClick={this.props.history.goBack}> Go Back </button> 
-					<p> {pokedata.name}, the {pokedata.genus} </p>
-					<img src = {pokedata.image} alt = 'Pokemon' />
-					<p> {arrayToString(pokedata.types)} </p>
+				<div className="PokemonDetailsDiv">
+					<p> {pokedata.name}, the {pokedata.genus}  #{pokedata.id} </p>
+					<img src = {pokedata.image} alt = 'Pokemon' /> <br />
+					<span> {type_list} </span> <br /> <br />
+					{pokedata.description}					
+					<p id = 'DetailsHeader'> Details </p>
 					<p> Abilities: {arrayToString(pokedata.abilities)} </p>
-					{pokedata.description}
+					<p> Height: {pokedata.height} ft </p>
+					<p> Weight: {pokedata.weight} lbs </p>
+					<p> Egg Groups: {arrayToString(pokedata.egg_groups)} </p>
+					<p> Genus: {capitalizeWords(pokedata.genus)} </p>
+					<br />
 					{this.printStats(pokedata.stats)}
 				</div>
 			);
@@ -66,7 +202,13 @@ class PokeDetails extends React.Component {
 	}
 	
 	render() {
-		return <div className="PokemonDetailsDiv">{this.renderData()}</div>;
+		return (
+			<div>
+				<br />
+				<button onClick={this.props.history.goBack}> Go Back </button>
+				{this.renderData()}
+			</div>
+		);
 	}
 }
 
@@ -83,18 +225,21 @@ class PokeList extends React.Component {
 	}
 	
 	renderData = () => {
-		let num_per_row = window.innerWidth >= 700 ? 3 :
+		let num_per_row = window.innerWidth >= 900 ? 3 :
 						  window.innerWidth >= 500 ? 2 : 1;
 		let num_rows = Math.ceil(15 / num_per_row);
-		console.log(num_per_row);
-		console.log(num_rows);
 		let pokedata = this.state.data.map( (pokemon) => {
+			let type_list = [];
+		
+			for (var i = 0; i < pokemon.types.length; i++) {
+				type_list.push(<span className={pokemon.types[i]}>{pokemon.types[i].toUpperCase()}</span>);
+			}
 			return (
 				<td onClick={() => this.viewPokemonDetails(pokemon.id)}
 					className="PokemonListItem"> 
-					<img src = {pokemon.image} alt = 'Pokemon' /> 
 					<p> {pokemon.name} </p>
-					<p> {arrayToString(pokemon.types)} </p>
+					<img src = {pokemon.image} alt = 'Pokemon' /> <br /> 
+					<span> {type_list} </span>
 				</td>
 			);
 		});
@@ -146,7 +291,9 @@ class PokePage extends React.Component {
 	searchPokes = (e) => {
 		e.preventDefault();
 		const poke = e.target.elements.pokename.value;
-		window.location.href = `/name/${poke}/`;
+		if (poke !== '') {
+			window.location.href = `/name/${poke}/`;
+		}
 	}
 	
 	navButtons() {
@@ -154,12 +301,14 @@ class PokePage extends React.Component {
 			return (
 				<div>
 					<button onClick={() => this.viewPreviousPage()}> Previous Page </button>
+					<button onClick={() => this.viewHomePage()}> Home </button>
 					<button onClick={() => this.viewNextPage()}> Next Page </button>						
 				</div>
 			);
 		} else {
 			return (
 				<div>
+					<button onClick={() => this.viewHomePage()}> Home </button>
 					<button onClick={() => this.viewNextPage()}> Next Page </button>
 				</div>
 			);
@@ -185,14 +334,20 @@ class PokePage extends React.Component {
 		window.location.href = url;
 	}
 	
+	viewHomePage = () => {
+		window.location.href = '/';
+	}
+	
 	render() {
 		return (
 			<div>
 				<PokeForm onSubmit={this.searchPokes}/>
+				<br />
 				{this.navButtons()}
 				<PokeList search_name={this.props.match.params.poke}
 								 page={this.props.match.params.page}
 				/>
+				{this.navButtons()}
 			</div>
 		);
 	}
