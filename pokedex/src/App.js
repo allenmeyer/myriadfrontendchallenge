@@ -180,8 +180,8 @@ class PokeDetails extends React.Component {
 					{pokedata.description}					
 					<p id = 'DetailsHeader'> Details </p>
 					<p> Abilities: {arrayToString(pokedata.abilities)} </p>
-					<p> Height: {pokedata.height} ft </p>
-					<p> Weight: {pokedata.weight} lbs </p>
+					<p> Height: {pokedata.height} m </p>
+					<p> Weight: {pokedata.weight} kg </p>
 					<p> Egg Groups: {arrayToString(pokedata.egg_groups)} </p>
 					<p> Genus: {capitalizeWords(pokedata.genus)} </p>
 					<br />
